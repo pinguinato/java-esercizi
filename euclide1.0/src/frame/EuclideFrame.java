@@ -11,6 +11,7 @@ public class EuclideFrame extends JFrame {
 	// variabili di istanza
 	private int a,b;
 	private ImageIcon icona1 = new ImageIcon("gomma.jpg");
+	
 	//private ImageIcon icona2 = new ImageIcon("euclidepapiro.jpg");
 	private JButton b1 = new JButton("MCD");
 	private JButton bReset = new JButton(icona1);
