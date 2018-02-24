@@ -13,11 +13,15 @@ import frame.*;
 
 public class Main {
 	/**
-	 * Metodo main()
+	 * Metodo main() - crea una finestra Euclide Frame per eseguire l'algoritmo di Euclide
 	 * @param args
 	 */
 	public static void main(String[]args) {
-		
+		EuclideFrame finestra = new EuclideFrame("Massimo Coumune Divisore");
+		Toolkit kit = finestra.getToolkit();
+		Dimension dim = kit.getScreenSize();
+		finestra.setBounds(dim.width/4,dim.height/4,dim.width/2,dim.height/2);
+		finestra.setVisible(true);
 	}
 	
 	
