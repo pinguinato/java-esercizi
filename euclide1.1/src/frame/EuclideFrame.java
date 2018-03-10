@@ -35,6 +35,10 @@ public class EuclideFrame extends JFrame {
 	private JPanel output = new JPanel();
 	private JPanel pulsanti = new JPanel();
 	
+	private Font font1 = new Font("Verdana",Font.BOLD,18);
+	private Font font2 = new Font("Arial",Font.ITALIC,20);
+	private Color verdePetrolio = new Color(51,119,119);
+	
 	/**
 	 * Costruttore dell'interfaccia grafica
 	 */
@@ -46,7 +50,10 @@ public class EuclideFrame extends JFrame {
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		// contenitore
 		Container cp = getContentPane();
+		
 		b1.setPreferredSize(new Dimension(200,100));
+		b2.setPreferredSize(new Dimension(200,100));
+		
 		bReset.setPreferredSize(new Dimension(200,100));
 		// layout della finestra
 		input.setLayout(new FlowLayout());
@@ -58,15 +65,28 @@ public class EuclideFrame extends JFrame {
 		
 		output.setLayout(new FlowLayout());
 		output.add(tR);
+		output.add(bReset);
 		tR.setEditable(false);
 		
 		pulsanti.setLayout(new BorderLayout());
 		pulsanti.add(b1,BorderLayout.WEST);
-		pulsanti.add(bReset,BorderLayout.EAST);
+		pulsanti.add(b2,BorderLayout.EAST);
+		//pulsanti.add(bReset,BorderLayout.EAST);
 		pulsanti.add(bImmagine,BorderLayout.CENTER);
 		
-		input.setBackground(Color.green);
-		output.setBackground(Color.blue);
+		input.setBackground(Color.black);
+		output.setBackground(Color.black);
+		b2.setBackground(verdePetrolio);
+		b2.setForeground(Color.white);
+		b1.setBackground(verdePetrolio);
+		b1.setForeground(Color.white);
+		tR.setFont(font1);
+		lA.setFont(font2);
+		lB.setFont(font2);
+		tA.setFont(font1);
+		tB.setFont(font1);
+		lA.setForeground(Color.white);
+		lB.setForeground(Color.white);
 		
 		cp.setLayout(new BorderLayout());
 		cp.add(input,BorderLayout.NORTH);
@@ -76,6 +96,7 @@ public class EuclideFrame extends JFrame {
 		tA.getDocument().addDocumentListener(new LeggiA());
 		tB.getDocument().addDocumentListener(new LeggiB());
 		b1.addActionListener(new CalcolaMCD());
+		b2.addActionListener(new CalcolaMCM());
 		//bReset.addActionListener(new Reset());
 	
 		pack();
@@ -83,14 +104,16 @@ public class EuclideFrame extends JFrame {
 	
 	class LeggiA implements DocumentListener {
 		public void insertUpdate(DocumentEvent e) {
-			a = Integer.parseInt(tA.getText());
+			//a = Integer.parseInt(tA.getText());
+			num1Str = tA.getText();
 		}
 		public void removeUpdate(DocumentEvent e) {}
 		public void changedUpdate(DocumentEvent e) {}
 	}
 	class LeggiB implements DocumentListener {
 		public void insertUpdate(DocumentEvent e) {
-			b = Integer.parseInt(tB.getText());
+			//b = Integer.parseInt(tB.getText());
+			num2Str = tB.getText();
 		}
 		public void removeUpdate(DocumentEvent e) {}
 		public void changedUpdate(DocumentEvent e) {}
@@ -106,13 +129,33 @@ public class EuclideFrame extends JFrame {
 			}
 		}
 	}
+	class CalcolaMCM implements ActionListener{
+		public void actionPerformed(ActionEvent e) {
+			MCMEuclide mcm = new MCMEuclide(a,b);
+			int risultato = mcm.mcmEuclide();
+			if(risultato!=0) {
+				tR.setText("Minimo comune multiplo = "+risultato);
+			}else {
+				tR.setText("Errore: entrambi i numeri sono uguali a zero!");
+			}
+		}
+	}
 	// metodo che resetta i risultati
 	class Reset implements ActionListener{
 		public void actionPerformed(ActionEvent e) {
 			tA.setText(null);
 			tB.setText(null);
 			tR.setText(null);
+			num1Str = num2Str = null;
 			a=b=0;
 		}
+	}
+	
+	//solo interi nel range
+	private boolean soloINteriNelRange() {
+		boolean formatoERangeOK = false;
+		
+		range = true;
+		
 	}
 }
